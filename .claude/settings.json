@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(npx nest build:*)",
+      "Bash(echo:*)",
+      "Bash(ls:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run format:*)",
+      "Bash(npm run test:e2e:*)"
+    ]
+  }
+}

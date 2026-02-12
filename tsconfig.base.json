@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "composite": true,
+    "incremental": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@ai-cycling-trainer/shared-types": ["./packages/shared-types/src"],
+      "@ai-cycling-trainer/shared-utils": ["./packages/shared-utils/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "build"]
+}

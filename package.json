@@ -1,0 +1,33 @@
+{
+  "name": "ai-cycling-trainer",
+  "version": "0.1.0",
+  "description": "AI-powered cycling coach with personalized workouts",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test:e2e": "npm run test:e2e -w apps/api"
+  },
+  "keywords": [
+    "cycling",
+    "training",
+    "ai",
+    "intervals-icu"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

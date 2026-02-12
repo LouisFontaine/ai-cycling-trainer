@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.claude
+.vscode
+*.db
+*.db-journal
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+coverage
+.nyc_output
+*.log

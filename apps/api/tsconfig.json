@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "composite": false,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@domain/*": ["./src/domain/*"],
+      "@application/*": ["./src/application/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
+      "@presentation/*": ["./src/presentation/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@ai-cycling-trainer/shared-types": ["../../packages/shared-types/src"],
+      "@ai-cycling-trainer/shared-utils": ["../../packages/shared-utils/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"]
+}

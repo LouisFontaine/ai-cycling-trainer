@@ -1,0 +1,58 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      API_PREFIX: api/v1
+      DATABASE_URL: file:./prisma/dev.db
+      JWT_SECRET: docker-dev-secret-change-me
+      JWT_EXPIRATION: 1d
+      CORS_ORIGIN: http://localhost:3001
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+      - ./apps/api/prisma:/app/apps/api/prisma
+      - ./packages/shared-types/src:/app/packages/shared-types/src
+      - ./packages/shared-utils/src:/app/packages/shared-utils/src
+    working_dir: /app/apps/api
+    command: sh -c "npx prisma migrate deploy && npx nest start --watch"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3001:3001'
+    environment:
+      API_URL: http://api:3000
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/index.html:/app/apps/web/index.html
+      - ./apps/web/vite.config.ts:/app/apps/web/vite.config.ts
+      - ./apps/web/tsconfig.json:/app/apps/web/tsconfig.json
+      - ./apps/web/tsconfig.node.json:/app/apps/web/tsconfig.node.json
+      - ./packages/shared-types/src:/app/packages/shared-types/src
+      - ./packages/shared-utils/src:/app/packages/shared-utils/src
+    working_dir: /app/apps/web
+    command: npx vite --host --port 3001
+    depends_on:
+      - api
+
+  studio:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '5555:5555'
+    environment:
+      DATABASE_URL: file:./prisma/dev.db
+    volumes:
+      - ./apps/api/prisma:/app/apps/api/prisma
+    working_dir: /app/apps/api
+    command: npx prisma studio --port 5555 --browser none
+    depends_on:
+      - api
