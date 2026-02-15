@@ -43,7 +43,7 @@ ai-cycling-trainer/
 Clean Architecture with 4 layers:
 
 - `src/domain/` — Pure business logic: entities, repository interfaces, value objects
-- `src/application/` — Orchestration: services and use cases
+- `src/application/` — Orchestration: services and use cases, no httpException
 - `src/infrastructure/` — Technical implementations: database, config, HTTP clients (Intervals.icu)
 - `src/presentation/` — API surface: controllers, DTOs, guards
 - `src/shared/` — Internal shared utilities
@@ -94,12 +94,12 @@ docker compose down    # Stop all services
 
 ### Services
 
-| Service | URL | Description |
-|---------|-----|-------------|
-| Frontend | http://localhost:3001 | React app served by nginx |
-| API | http://localhost:3000/api/v1 | NestJS backend |
-| Swagger | http://localhost:3000/api/docs | API documentation |
-| Prisma Studio | http://localhost:5555 | Database inspection UI |
+| Service       | URL                            | Description               |
+| ------------- | ------------------------------ | ------------------------- |
+| Frontend      | http://localhost:3001          | React app served by nginx |
+| API           | http://localhost:3000/api/v1   | NestJS backend            |
+| Swagger       | http://localhost:3000/api/docs | API documentation         |
+| Prisma Studio | http://localhost:5555          | Database inspection UI    |
 
 ### Environment Variables
 

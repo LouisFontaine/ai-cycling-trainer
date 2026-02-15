@@ -3,9 +3,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 
-// Domain
-import { USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
-
 // Application
 import { RegisterUseCase } from '@application/use-cases/register.use-case';
 import { LoginUseCase } from '@application/use-cases/login.use-case';
@@ -13,7 +10,7 @@ import { PASSWORD_HASHER } from '@application/services/password-hasher.interface
 import { TOKEN_SERVICE } from '@application/services/token-service.interface';
 
 // Infrastructure
-import { PrismaUserRepository } from '@infrastructure/database/repositories/prisma-user.repository';
+import { RepositoryModule } from '@infrastructure/database/repository.module';
 import { BcryptPasswordHasher } from '@infrastructure/auth/bcrypt-password-hasher';
 import { JwtTokenService } from '@infrastructure/auth/jwt-token.service';
 import { JwtStrategy } from '@infrastructure/auth/jwt.strategy';
@@ -23,6 +20,7 @@ import { AuthController } from '@presentation/controllers/auth.controller';
 
 @Module({
   imports: [
+    RepositoryModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -41,10 +39,6 @@ import { AuthController } from '@presentation/controllers/auth.controller';
     LoginUseCase,
 
     // Infrastructure -> Domain bindings (Dependency Inversion)
-    {
-      provide: USER_REPOSITORY,
-      useClass: PrismaUserRepository,
-    },
     {
       provide: PASSWORD_HASHER,
       useClass: BcryptPasswordHasher,

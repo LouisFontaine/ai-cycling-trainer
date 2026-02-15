@@ -1,5 +1,6 @@
-import { Injectable, Inject, ConflictException } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { IUserRepository, USER_REPOSITORY } from '@domain/repositories/user.repository.interface';
+import { EmailAlreadyExistsException } from '@domain/exceptions/domain.exception';
 import { IPasswordHasher, PASSWORD_HASHER } from '@application/services/password-hasher.interface';
 import { ITokenService, TOKEN_SERVICE } from '@application/services/token-service.interface';
 
@@ -29,7 +30,7 @@ export class RegisterUseCase {
   async execute(input: RegisterInput): Promise<RegisterOutput> {
     const existingUser = await this.userRepository.findByEmail(input.email);
     if (existingUser) {
-      throw new ConflictException('Email already registered');
+      throw new EmailAlreadyExistsException();
     }
 
     const passwordHash = await this.passwordHasher.hash(input.password);
