@@ -14,7 +14,9 @@ const TEST_DATABASE_URL = `file:${TEST_DB_PATH}`;
 let app: INestApplication;
 let prismaService: PrismaService;
 
-export async function createTestApp(): Promise<INestApplication> {
+export async function createTestApp(
+  overrides?: { token: any; value: any }[],
+): Promise<INestApplication> {
   // Set test environment variables before module creation
   process.env.DATABASE_URL = TEST_DATABASE_URL;
   process.env.JWT_SECRET = 'test-jwt-secret-for-e2e';
@@ -27,9 +29,17 @@ export async function createTestApp(): Promise<INestApplication> {
     stdio: 'pipe',
   });
 
-  const moduleFixture: TestingModule = await Test.createTestingModule({
+  let builder = Test.createTestingModule({
     imports: [AppModule],
-  }).compile();
+  });
+
+  if (overrides) {
+    for (const override of overrides) {
+      builder = builder.overrideProvider(override.token).useValue(override.value) as any;
+    }
+  }
+
+  const moduleFixture: TestingModule = await builder.compile();
 
   app = moduleFixture.createNestApplication();
 
