@@ -5,6 +5,7 @@ import { DatabaseModule } from '@infrastructure/database/database.module';
 import { DomainExceptionFilter } from '@presentation/filters/domain-exception.filter';
 import { AuthModule } from './auth.module';
 import { IntervalsIcuModule } from './intervals-icu.module';
+import { WorkoutModule } from './workout.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { IntervalsIcuModule } from './intervals-icu.module';
     DatabaseModule,
     AuthModule,
     IntervalsIcuModule,
+    WorkoutModule,
   ],
   controllers: [],
   providers: [

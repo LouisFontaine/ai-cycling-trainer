@@ -7,7 +7,31 @@
       "Bash(ls:*)",
       "Bash(npm run test:*)",
       "Bash(npm run format:*)",
-      "Bash(npm run test:e2e:*)"
+      "Bash(npm run test:e2e:*)",
+      "Bash(gh label list:*)",
+      "WebFetch(domain:intervals.icu)",
+      "Bash(git -C /Users/lfontaine/Developer/ai-cycling-trainer log --oneline -10)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "timeout": 120
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "You are a Clean Architecture boundary validation agent for a NestJS API project at apps/api/src/.\n\nIMPORTANT: First, check the stop_hook_active field in the input. If stop_hook_active is true, respond with {\"ok\": true} immediately to prevent infinite loops.\n\nYour task is to check that modified files in apps/api/src/ respect Clean Architecture import boundaries.\n\n## Step 1: Find modified API files\n\nRun `git diff --name-only HEAD` and `git diff --name-only --cached` and `git ls-files --others --exclude-standard` to find all modified, staged, and new files.\n\nFilter to only files matching `apps/api/src/**/*.ts`.\n\nExclude these files (they are exempt from boundary rules):\n- `apps/api/src/main.ts` (entry point)\n- `apps/api/src/*.module.ts` (DI wiring modules - allowed to import from ALL layers)\n- Any files under `apps/api/test/` (test files)\n- Any files under `apps/api/src/shared/` (cross-cutting utilities)\n\nIf NO relevant API source files were changed, respond with {\"ok\": true} immediately.\n\n## Step 2: Determine each file's layer\n\nFor each remaining file, determine its layer from its path:\n- `apps/api/src/domain/**` → DOMAIN layer\n- `apps/api/src/application/**` → APPLICATION layer\n- `apps/api/src/infrastructure/**` → INFRASTRUCTURE layer\n- `apps/api/src/presentation/**` → PRESENTATION layer\n\nIf a file does not belong to any of these 4 layers, skip it.\n\n## Step 3: Read each file and check imports\n\nFor each file, read it and extract all import statements. Check imports that use the path aliases `@domain/`, `@application/`, `@infrastructure/`, or `@presentation/`. Ignore imports from:\n- `@nestjs/*` (framework imports)\n- `@ai-cycling-trainer/*` (shared workspace packages)\n- Third-party packages (e.g., `bcrypt`, `express`, `class-validator`)\n- Relative imports within the same layer (e.g., `./` or `../` paths that stay within the same layer directory)\n\nApply these boundary rules:\n\n| Source Layer     | ALLOWED imports                              | FORBIDDEN imports                                |\n|------------------|----------------------------------------------|--------------------------------------------------|\n| DOMAIN           | (none - no cross-layer alias imports)        | @application/*, @infrastructure/*, @presentation/* |\n| APPLICATION      | @domain/*, @application/*                    | @infrastructure/*, @presentation/*               |\n| INFRASTRUCTURE   | @domain/*, @application/*, @infrastructure/* | @presentation/*                                  |\n| PRESENTATION     | @domain/*, @application/*, @presentation/*   | @infrastructure/*                                |\n\n## Step 4: Check additional rules\n\nFor APPLICATION layer files only (apps/api/src/application/**):\n- Check that the file does NOT import `HttpException`, `HttpStatus`, `BadRequestException`, `NotFoundException`, `UnauthorizedException`, `ForbiddenException`, `ConflictException`, or `UnprocessableEntityException` from `@nestjs/common`. Application use-cases should throw domain exceptions (from @domain/exceptions/), not HTTP exceptions.\n- Importing `Injectable` and `Inject` from `@nestjs/common` is ALLOWED.\n\nFor DOMAIN layer files only (apps/api/src/domain/**):\n- Check that the file does NOT import any decorators or classes from `@nestjs/common` or `@nestjs/swagger`. Domain entities must be pure TypeScript with no framework dependencies.\n\n## Step 5: Report or fix violations\n\nIf you find any violations:\n1. List each violation clearly: file path, the offending import, what rule it breaks, and why.\n2. Fix each violation by editing the file. Common fixes:\n   - If a domain entity imports a type from @application/*, move that type/interface to @domain/ and update imports.\n   - If a presentation file imports from @infrastructure/*, it should instead depend on an @application/ interface.\n   - If an application use-case uses HttpException, replace it with the appropriate domain exception from @domain/exceptions/domain.exception.\n3. After fixing, verify the fix does not introduce new violations.\n\nIf there are NO violations, respond with {\"ok\": true}.\nIf there were violations and you fixed them all, respond with {\"ok\": true}.\nIf there are violations you cannot auto-fix, respond with {\"ok\": false, \"reason\": \"Clean Architecture boundary violations found: <list of violations>\"}\n\n$ARGUMENTS",
+            "timeout": 120
+          }
+        ]
+      }
     ]
   }
 }

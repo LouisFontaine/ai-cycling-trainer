@@ -33,3 +33,9 @@ export class InvalidIntervalsIcuCredentialsException extends DomainException {
     super(message, 'INVALID_INTERVALS_ICU_CREDENTIALS');
   }
 }
+
+export class IntervalsIcuNotConnectedException extends DomainException {
+  constructor(message = 'Intervals.icu account is not connected. Please connect it in settings.') {
+    super(message, 'INTERVALS_ICU_NOT_CONNECTED');
+  }
+}

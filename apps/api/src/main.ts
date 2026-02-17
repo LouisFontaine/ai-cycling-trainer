@@ -39,7 +39,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('auth')
     .addTag('workouts')
-    .addTag('users')
+    .addTag('intervals-icu')
     .addTag('training-plans')
     .addBearerAuth()
     .build();

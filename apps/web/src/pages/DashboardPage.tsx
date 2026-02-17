@@ -1,4 +1,5 @@
 import { AppLayout } from '@/components/AppLayout';
+import { NextWorkoutCard } from '@/components/NextWorkoutCard';
 
 export function DashboardPage() {
   return (
@@ -7,10 +8,7 @@ export function DashboardPage() {
       <p className="mt-2 text-gray-600">Your training dashboard will appear here.</p>
 
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-medium text-gray-900">Next workout</h3>
-          <p className="mt-2 text-gray-500">No workout scheduled</p>
-        </div>
+        <NextWorkoutCard />
 
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-medium text-gray-900">Training load</h3>
