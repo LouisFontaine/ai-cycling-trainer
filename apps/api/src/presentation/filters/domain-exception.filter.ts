@@ -6,6 +6,7 @@ import {
   InvalidCredentialsException,
   EmailAlreadyExistsException,
   InvalidIntervalsIcuCredentialsException,
+  IntervalsIcuNotConnectedException,
 } from '@domain/exceptions/domain.exception';
 
 @Catch(DomainException)
@@ -19,6 +20,10 @@ export class DomainExceptionFilter implements ExceptionFilter {
     [EmailAlreadyExistsException, { status: HttpStatus.CONFLICT, error: 'Conflict' }],
     [
       InvalidIntervalsIcuCredentialsException,
+      { status: HttpStatus.UNPROCESSABLE_ENTITY, error: 'Unprocessable Entity' },
+    ],
+    [
+      IntervalsIcuNotConnectedException,
       { status: HttpStatus.UNPROCESSABLE_ENTITY, error: 'Unprocessable Entity' },
     ],
   ]);
