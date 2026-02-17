@@ -30,7 +30,7 @@ export class IntervalsIcuClient implements IIntervalsIcuClient {
       throw new Error(`Intervals.icu API error: ${response.status} ${response.statusText}`);
     }
 
-    const data: Record<string, any> = await response.json();
+    const data = (await response.json()) as { id: string; name?: string; firstname?: string; lastname?: string };
 
     return {
       id: data.id,

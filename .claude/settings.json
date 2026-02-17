@@ -10,7 +10,8 @@
       "Bash(npm run test:e2e:*)",
       "Bash(gh label list:*)",
       "WebFetch(domain:intervals.icu)",
-      "Bash(git -C /Users/lfontaine/Developer/ai-cycling-trainer log --oneline -10)"
+      "Bash(git -C /Users/lfontaine/Developer/ai-cycling-trainer log --oneline -10)",
+      "Bash(npm run test:unit:*)"
     ]
   },
   "hooks": {

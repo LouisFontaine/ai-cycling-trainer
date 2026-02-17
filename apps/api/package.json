@@ -8,6 +8,7 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "test": "jest",
+    "test:unit": "jest --config jest.unit.config.ts",
     "test:e2e": "jest --config jest.e2e.config.ts --runInBand"
   },
   "dependencies": {

@@ -2,6 +2,7 @@ import { InvalidIntervalsIcuCredentialsException } from '@domain/exceptions/doma
 import {
   IIntervalsIcuClient,
   IntervalsIcuAthlete,
+  IntervalsIcuEvent,
 } from '../../../src/application/services/intervals-icu-client.interface';
 
 export class MockIntervalsIcuClient implements IIntervalsIcuClient {
@@ -10,12 +11,17 @@ export class MockIntervalsIcuClient implements IIntervalsIcuClient {
     id: 'i12345',
     name: 'Test Athlete',
   };
+  private mockEvents: IntervalsIcuEvent[] = [];
 
   setSuccess(athlete?: Partial<IntervalsIcuAthlete>): void {
     this.shouldSucceed = true;
     if (athlete) {
       this.mockAthlete = { ...this.mockAthlete, ...athlete };
     }
+  }
+
+  setEvents(events: IntervalsIcuEvent[]): void {
+    this.mockEvents = events;
   }
 
   setFailure(): void {
@@ -27,5 +33,12 @@ export class MockIntervalsIcuClient implements IIntervalsIcuClient {
       throw new InvalidIntervalsIcuCredentialsException();
     }
     return { ...this.mockAthlete, id: athleteId };
+  }
+
+  async getEvents(): Promise<IntervalsIcuEvent[]> {
+    if (!this.shouldSucceed) {
+      throw new InvalidIntervalsIcuCredentialsException();
+    }
+    return [...this.mockEvents];
   }
 }

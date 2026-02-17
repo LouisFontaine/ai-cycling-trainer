@@ -3,7 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
-  testRegex: '.e2e-spec.ts$',
+  testRegex: '.*\\.spec\\.ts$',
   transform: {
     '^.+\\.(t|j)s$': [
       'ts-jest',
@@ -26,7 +26,6 @@ const config: Config = {
     '!src/**/*.interface.ts',
     '!src/main.ts',
   ],
-  modulePaths: ['<rootDir>/node_modules'],
   moduleNameMapper: {
     '^@domain/(.*)$': '<rootDir>/src/domain/$1',
     '^@application/(.*)$': '<rootDir>/src/application/$1',
@@ -36,7 +35,6 @@ const config: Config = {
     '^@ai-cycling-trainer/shared-types$': '<rootDir>/../../packages/shared-types/src',
     '^@ai-cycling-trainer/shared-utils$': '<rootDir>/../../packages/shared-utils/src',
   },
-  testTimeout: 30000,
 };
 
 export default config;
