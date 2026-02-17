@@ -8,12 +8,7 @@ const config: Config = {
     '^.+\\.(t|j)s$': [
       'ts-jest',
       {
-        tsconfig: {
-          esModuleInterop: true,
-          allowSyntheticDefaultImports: true,
-          emitDecoratorMetadata: true,
-          experimentalDecorators: true,
-        },
+        tsconfig: 'tsconfig.json',
         diagnostics: false,
       },
     ],
@@ -26,6 +21,7 @@ const config: Config = {
     '!src/**/*.interface.ts',
     '!src/main.ts',
   ],
+  watchPathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/dist', '<rootDir>/prisma/dev.db'],
   moduleNameMapper: {
     '^@domain/(.*)$': '<rootDir>/src/domain/$1',
     '^@application/(.*)$': '<rootDir>/src/application/$1',
